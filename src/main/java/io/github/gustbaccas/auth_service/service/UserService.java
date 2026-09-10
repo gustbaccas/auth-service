@@ -34,7 +34,4 @@ public class UserService {
 
         return new RegisterResponse(savedUser.getId(), savedUser.getEmail());
     }
-
-    ;
-
 }
