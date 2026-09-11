@@ -1,5 +1,7 @@
 package io.github.gustbaccas.auth_service.controller;
 
+import io.github.gustbaccas.auth_service.dto.LoginRequest;
+import io.github.gustbaccas.auth_service.dto.LoginResponse;
 import io.github.gustbaccas.auth_service.dto.RegisterRequest;
 import io.github.gustbaccas.auth_service.dto.RegisterResponse;
 import io.github.gustbaccas.auth_service.service.UserService;
@@ -29,6 +31,12 @@ public class AuthController {
                     .body(response);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request){
+        LoginResponse response = service.login(request);
+
+        return ResponseEntity.ok(response);
+    }
 
 }
 
