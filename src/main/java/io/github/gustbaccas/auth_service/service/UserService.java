@@ -17,10 +17,12 @@ public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder encoder;
+    private final JwtService jwtService;
 
-    public UserService(UserRepository repository, PasswordEncoder encoder) {
+    public UserService(UserRepository repository, PasswordEncoder encoder, JwtService jwtService) {
         this.repository = repository;
         this.encoder = encoder;
+        this.jwtService = jwtService;
     }
 
     public RegisterResponse create(RegisterRequest request) {
@@ -53,7 +55,10 @@ public class UserService {
             throw new RuntimeException("Invalid email or password");
         }
 
-        return new LoginResponse(user.getId(), user.getEmail());
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new LoginResponse(user.getId(), user.getEmail(), token);
 
     }
+
 }
