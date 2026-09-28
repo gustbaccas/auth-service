@@ -1,10 +1,10 @@
 package io.github.gustbaccas.auth_service.controller;
 
 import io.github.gustbaccas.auth_service.dto.*;
-import io.github.gustbaccas.auth_service.entity.PasswordResetToken;
 import io.github.gustbaccas.auth_service.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -40,9 +40,14 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestBody @Valid ResetPasswordRequest request){
+    public ResponseEntity<String> resetPassword(@RequestBody @Valid ResetPasswordRequest request) {
         service.resetPassword(request);
         return ResponseEntity.ok("Password has been reset successfully");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<String> me(Authentication authentication) {
+        return ResponseEntity.ok(authentication.getName());
     }
 
 }
